@@ -9,7 +9,8 @@
 
 * [x] Create basic game screen
 * [x] Create a ball in the center of the screen
-* [ ] Have the ball move
+* [x] Have the ball move
+* [ ] Have ball bounce off the walls
 
 ## Skills needed
 
@@ -20,6 +21,7 @@
 * ?
 * Adding a dependency
 * Adding multiple dependencies with ::{...}
+* as
 * Crates.io
 * Creating new project
 * Documentation
@@ -31,9 +33,11 @@
 * Installing Rust
 * Main function in main file
 * Match
+* math order of operations
 * Mutable vs immutable variables
 * printing to the console
 * Public vs private methods
+* really large numbers like 1e9
 * references
 * Result type
 * Running a project
