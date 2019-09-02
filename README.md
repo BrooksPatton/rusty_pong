@@ -8,7 +8,8 @@
 ## Todo
 
 * [x] Create basic game screen
-* [ ] Create a ball in the center of the screen
+* [x] Create a ball in the center of the screen
+* [ ] Have the ball move
 
 ## Skills needed
 
@@ -19,7 +20,9 @@
 * ?
 * Adding a dependency
 * Adding multiple dependencies with ::{...}
+* Crates.io
 * Creating new project
+* Documentation
 * enums
 * expect()
 * Functions

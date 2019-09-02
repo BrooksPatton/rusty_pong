@@ -10,11 +10,13 @@ struct Pong {
 }
 
 impl Pong {
-    pub fn new() -> Pong {
+    pub fn new(context: &Context) -> Pong {
+        let (window_width, window_height) = graphics::drawable_size(context);
+
         Pong {
-            ball_location: Point2::new(50.0, 65.0),
+            ball_location: Point2::new(window_width / 2.0, window_height / 2.0),
             ball_relative_location: Point2::new(0.0, 0.0),
-            ball_radius: 100.0,
+            ball_radius: 10.0,
             ball_color: graphics::WHITE
         }
     }
@@ -48,7 +50,7 @@ fn main() {
         .build()
         .expect("game context not able to be created :(");
 
-    let mut pong = Pong::new();
+    let mut pong = Pong::new(&context);
 
     match event::run(&mut context, &mut event_loop, &mut pong) {
         Ok(_) => println!("Game finished, hope you had fun!"),
