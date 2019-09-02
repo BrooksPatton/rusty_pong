@@ -7,7 +7,8 @@
 
 ## Todo
 
-* [ ] Create basic game screen
+* [x] Create basic game screen
+* [ ] Create a ball in the center of the screen
 
 ## Skills needed
 
@@ -15,6 +16,7 @@
 * _ to mark variables not used
 * :: on Structs
 * . on functions
+* ?
 * Adding a dependency
 * Adding multiple dependencies with ::{...}
 * Creating new project

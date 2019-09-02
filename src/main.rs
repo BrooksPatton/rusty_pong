@@ -1,13 +1,22 @@
 use ggez::{ContextBuilder, event, Context, GameResult, graphics};
 use ggez::event::{EventHandler};
+use ggez::nalgebra::{Point2};
 
 struct Pong {
-
+    ball_location: Point2<f32>,
+    ball_relative_location: Point2<f32>,
+    ball_radius: f32,
+    ball_color: graphics::Color
 }
 
 impl Pong {
     pub fn new() -> Pong {
-        Pong {}
+        Pong {
+            ball_location: Point2::new(50.0, 65.0),
+            ball_relative_location: Point2::new(0.0, 0.0),
+            ball_radius: 100.0,
+            ball_color: graphics::WHITE
+        }
     }
 }
 
@@ -18,6 +27,17 @@ impl EventHandler for Pong {
 
     fn draw(&mut self, context: &mut Context) -> GameResult<()> {
         graphics::clear(context, graphics::BLACK);
+
+        let ball = graphics::MeshBuilder::new()
+            .circle(
+                graphics::DrawMode::fill(), 
+                self.ball_relative_location, 
+                self.ball_radius, 
+                0.01, 
+                self.ball_color)
+            .build(context)?;
+
+        graphics::draw(context, &ball, (self.ball_location,))?;
 
         graphics::present(context)
     }
