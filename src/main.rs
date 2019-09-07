@@ -7,7 +7,9 @@ struct Pong {
     ball_relative_location: Point2<f32>,
     ball_radius: f32,
     ball_color: graphics::Color,
-    ball_velocity: Point2<f32>
+    ball_velocity: Point2<f32>,
+    window_width: f32,
+    window_height: f32
 }
 
 impl Pong {
@@ -21,7 +23,9 @@ impl Pong {
             ball_relative_location: Point2::new(0.0, 0.0),
             ball_radius: 10.0,
             ball_color: graphics::WHITE,
-            ball_velocity
+            ball_velocity,
+            window_width,
+            window_height
         }
     }
 }
@@ -35,6 +39,20 @@ impl EventHandler for Pong {
             self.ball_location.x + (self.ball_velocity.x * delta_time),
             self.ball_location.y + (self.ball_velocity.y * delta_time)
         );
+
+        if self.ball_location.x > self.window_width - self.ball_radius {
+            self.ball_location.x = self.window_width - self.ball_radius;
+            self.ball_velocity.x = self.ball_velocity.x * -1.0;
+        } else if self.ball_location.x < self.ball_radius {
+            self.ball_location.x = self.ball_radius;
+            self.ball_velocity.x = self.ball_velocity.x * -1.0;
+        } else if self.ball_location.y < self.ball_radius {
+            self.ball_location.y = self.ball_radius;
+            self.ball_velocity.y = self.ball_velocity.y * -1.0;
+        } else if self.ball_location.y > self.window_height - self.ball_radius {
+            self.ball_location.y = self.window_height - self.ball_radius;
+            self.ball_velocity.y = self.ball_velocity.y * -1.0;
+        }
 
         Ok(())
     }
