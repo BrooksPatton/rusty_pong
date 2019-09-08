@@ -4,28 +4,37 @@ use ggez::nalgebra::{Point2};
 
 struct Pong {
     ball_location: Point2<f32>,
-    ball_relative_location: Point2<f32>,
     ball_radius: f32,
     ball_color: graphics::Color,
     ball_velocity: Point2<f32>,
     window_width: f32,
-    window_height: f32
+    window_height: f32,
+    player_paddle_location: graphics::Rect,
+    paddle_width: f32,
+    paddle_height: f32,
+    player_paddle_color: graphics::Color
 }
 
 impl Pong {
     pub fn new(context: &Context) -> Pong {
         let (window_width, window_height) = graphics::drawable_size(context);
-
         let ball_velocity = Point2::new(300.0, -150.0);
+        let paddle_height = 150.0;
+        let player_paddle_location = graphics::Rect::new(10.0, window_height / 2.0 - paddle_height / 2.0, 10.0, paddle_height);
+        let paddle_width = 10.0;
+        let player_paddle_color = graphics::WHITE;
 
         Pong {
             ball_location: Point2::new(window_width / 2.0, window_height / 2.0),
-            ball_relative_location: Point2::new(0.0, 0.0),
             ball_radius: 10.0,
             ball_color: graphics::WHITE,
             ball_velocity,
             window_width,
-            window_height
+            window_height,
+            player_paddle_location,
+            paddle_height,
+            paddle_width,
+            player_paddle_color
         }
     }
 }
@@ -60,16 +69,20 @@ impl EventHandler for Pong {
     fn draw(&mut self, context: &mut Context) -> GameResult<()> {
         graphics::clear(context, graphics::BLACK);
 
-        let ball = graphics::MeshBuilder::new()
+        let mesh = graphics::MeshBuilder::new()
             .circle(
                 graphics::DrawMode::fill(), 
-                self.ball_relative_location, 
+                self.ball_location, 
                 self.ball_radius, 
                 0.01, 
                 self.ball_color)
+            .rectangle(graphics::DrawMode::fill(), 
+                self.player_paddle_location, 
+                self.player_paddle_color
+            )
             .build(context)?;
 
-        graphics::draw(context, &ball, (self.ball_location,))?;
+        graphics::draw(context, &mesh, (Point2::new(0.0, 0.0),))?;
 
         graphics::present(context)
     }
