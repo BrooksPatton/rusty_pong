@@ -74,6 +74,13 @@ impl EventHandler for Pong {
             self.player_paddle_location.y = self.player_paddle_location.y + (self.paddle_speed * delta_time);
         }
 
+        if self.ball_location.y + self.ball_radius > self.player_paddle_location.y && self.ball_location.y - self.ball_radius < self.player_paddle_location.y + self.paddle_height {
+            if self.ball_location.x - self.ball_radius < self.player_paddle_location.x + self.paddle_width && self.ball_location.x + self.ball_radius > self.player_paddle_location.x {
+                self.ball_location.x = self.player_paddle_location.x + self.paddle_width + self.ball_radius;
+                self.ball_velocity.x = self.ball_velocity.x * -1.0;
+            }
+        }
+
         Ok(())
     }
 

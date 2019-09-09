@@ -22,6 +22,7 @@
 * Adding a dependency
 * Adding multiple dependencies with ::{...}
 * as
+* Boolean operators like &&
 * Conditionals with if...else if...else
 * Crates.io
 * Creating new project
