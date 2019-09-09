@@ -1,4 +1,4 @@
-use ggez::{ContextBuilder, event, Context, GameResult, graphics, timer};
+use ggez::{ContextBuilder, event, Context, GameResult, graphics, timer, input};
 use ggez::event::{EventHandler};
 use ggez::nalgebra::{Point2};
 
@@ -12,7 +12,8 @@ struct Pong {
     player_paddle_location: graphics::Rect,
     paddle_width: f32,
     paddle_height: f32,
-    player_paddle_color: graphics::Color
+    player_paddle_color: graphics::Color,
+    paddle_speed: f32
 }
 
 impl Pong {
@@ -23,6 +24,7 @@ impl Pong {
         let player_paddle_location = graphics::Rect::new(10.0, window_height / 2.0 - paddle_height / 2.0, 10.0, paddle_height);
         let paddle_width = 10.0;
         let player_paddle_color = graphics::WHITE;
+        let paddle_speed = 500.0;
 
         Pong {
             ball_location: Point2::new(window_width / 2.0, window_height / 2.0),
@@ -34,7 +36,8 @@ impl Pong {
             player_paddle_location,
             paddle_height,
             paddle_width,
-            player_paddle_color
+            player_paddle_color,
+            paddle_speed
         }
     }
 }
@@ -61,6 +64,14 @@ impl EventHandler for Pong {
         } else if self.ball_location.y > self.window_height - self.ball_radius {
             self.ball_location.y = self.window_height - self.ball_radius;
             self.ball_velocity.y = self.ball_velocity.y * -1.0;
+        }
+
+        let pressed_keys = input::keyboard::pressed_keys(context);
+
+        if pressed_keys.contains(&event::KeyCode::Up) {
+            self.player_paddle_location.y = self.player_paddle_location.y - (self.paddle_speed * delta_time);
+        } else if pressed_keys.contains(&event::KeyCode::Down) {
+            self.player_paddle_location.y = self.player_paddle_location.y + (self.paddle_speed * delta_time);
         }
 
         Ok(())
