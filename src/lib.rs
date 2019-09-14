@@ -34,6 +34,7 @@ impl EventHandler for Pong {
 
         self.ball.update(delta_time, self.arena_size);
         self.player_paddle.update(context, delta_time, self.arena_size, &mut self.ball);
+        self.ai_paddle.update(context, delta_time, self.arena_size, &mut self.ball);
 
         Ok(())
     }

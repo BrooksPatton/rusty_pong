@@ -16,8 +16,8 @@
 * [x] Player cannot move the paddle outside of the screen
 * [x] Ball bounces off player paddle
 * [x] AI player paddle exists
-* [ ] Ball bounces off AI paddle
-* [ ] AI player paddle moves to hit the ball
+* [x] Ball bounces off AI paddle
+* [x] AI player paddle moves to hit the ball
 * [ ] AI player paddle cannot move outside the screen
 * [ ] Player loses point when they miss the ball
 * [ ] AI player loses a point when they miss the ball
