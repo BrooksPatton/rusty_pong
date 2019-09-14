@@ -8,6 +8,7 @@
 ## Todo
 
 * [x] Create basic game screen
+* [x] Create center line
 * [x] Create a ball in the center of the screen
 * [x] Have the ball move
 * [x] Have ball bounce off the walls
@@ -18,7 +19,7 @@
 * [x] AI player paddle exists
 * [x] Ball bounces off AI paddle
 * [x] AI player paddle moves to hit the ball
-* [ ] AI player paddle cannot move outside the screen
+* [x] AI player paddle cannot move outside the screen
 * [ ] Player loses point when they miss the ball
 * [ ] AI player loses a point when they miss the ball
 * [ ] Score is displayed
