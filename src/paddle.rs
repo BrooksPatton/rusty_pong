@@ -1,15 +1,25 @@
 use ggez::nalgebra::Point2;
+use ggez::graphics::{Mesh, MeshBuilder, DrawMode, Rect, Color};
+use ggez::{GameResult, Context, input, event};
+use crate::Ball;
 
 pub struct Paddle {
 	location: Point2<f32>,
 	speed: f32,
 	width: f32,
 	height: f32,
+	color: Color,
 	is_player: bool
 }
 
+enum Direction {
+	Up,
+	Down,
+	Still
+}
+
 impl Paddle {
-	pub fn new(arena_width: f32, arena_height: f32, is_player: bool) -> Paddle {
+	pub fn new((arena_width, arena_height): (f32, f32), is_player: bool) -> Paddle {
 		let height = 75.0;
 		let width = 5.0;
 		let location = match is_player {
@@ -19,12 +29,74 @@ impl Paddle {
 
 		Paddle {
 			location,
-			speed: 50.0,
+			speed: 250.0,
 			width,
 			height,
-			is_player	
+			color: Color::from_rgb(255, 255, 255),
+			is_player
 		}
 	}
 
-	pub fn update()
+	pub fn draw(&mut self, context: &mut Context) -> GameResult<Mesh> {
+		let rect = Rect::new(self.location.x, self.location.y, self.width, self.height);
+
+		MeshBuilder::new()
+			.rectangle(DrawMode::fill(), rect, self.color)
+			.build(context)
+	}
+
+	pub fn update(&mut self, context: &mut Context, delta_time: f32, arena_size: (f32, f32), ball: &Ball) {
+		match self.move_direction(context, ball) {
+			Direction::Up => self.move_paddle_up(delta_time),
+			Direction::Down => self.move_paddle_down(delta_time),
+			Direction::Still => ()
+		};
+
+		self.limit_paddle_to_arena(arena_size);
+	}
+
+	fn move_direction(&mut self, context: &mut Context, ball: &Ball) -> Direction {
+		match self.is_player {
+			true => self.get_keyboard_direction(context),
+			false => self.get_ai_direction(ball)
+		}
+	}
+
+	fn move_paddle_up(&mut self, delta_time: f32) {
+		self.location.y = self.location.y - (self.speed * delta_time);
+	}
+
+	fn move_paddle_down(&mut self, delta_time: f32) {
+		self.location.y = self.location.y + (self.speed * delta_time);
+	}
+
+	fn limit_paddle_to_arena(&mut self, (_, arena_height): (f32, f32)) {
+		if self.location.y < 0.0 {
+			self.location.y = 0.0;
+		} else if self.location.y + self.height > arena_height {
+			self.location.y = arena_height - self.height;
+		}
+	}
+
+	fn get_keyboard_direction(&self, context: &mut Context) -> Direction {
+		let pressed_keys = input::keyboard::pressed_keys(context);
+
+        if pressed_keys.contains(&event::KeyCode::Up) {
+            Direction::Up
+        } else if pressed_keys.contains(&event::KeyCode::Down) {
+            Direction::Down
+		} else {
+			Direction::Still
+		}
+	}
+
+	fn get_ai_direction(&self, ball: &Ball) -> Direction {
+		if ball.location.y < self.location.y {
+			Direction::Up
+		} else if ball.location.y > self.location.y + self.height {
+			Direction::Down
+		} else {
+			Direction::Still
+		}
+	}
 }

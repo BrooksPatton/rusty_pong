@@ -14,7 +14,9 @@
 * [x] Create player paddle
 * [x] Player can move their paddle with arrow keys
 * [x] Player cannot move the paddle outside of the screen
+* [ ] Ball bounces off player paddle
 * [ ] AI player paddle exists
+* [ ] Ball bounces off AI paddle
 * [ ] AI player paddle moves to hit the ball
 * [ ] AI player paddle cannot move outside the screen
 * [ ] Player loses point when they miss the ball
@@ -39,6 +41,7 @@
 * Conditionals with if...else if...else
 * Crates.io
 * Creating new project
+* Destructuring tuples
 * Documentation
 * enums
 * expect()
@@ -49,6 +52,7 @@
 * Installing Rust
 * lib.rs
 * Main function in main file
+* Multiple library files
 * Match
 * math order of operations
 * Math with different types
@@ -56,6 +60,7 @@
 * printing to the console
 * Public vs private methods
 * really large numbers like 1e9
+* Refactoring to libraries
 * references
 * Result type
 * Running a project
@@ -68,4 +73,5 @@
 * Tuples
 * turbofish syntax
 * Types: f32, bool
+* use crate
 * Variables
