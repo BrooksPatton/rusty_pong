@@ -21,10 +21,9 @@
 * [x] Ball bounces off AI paddle
 * [x] AI player paddle moves to hit the ball
 * [x] AI player paddle cannot move outside the screen
-* [ ] Player loses point when they miss the ball
-* [ ] AI player loses a point when they miss the ball
-* [ ] Score is displayed
-* [ ] Game restarts with each point after pressing space
+* [x] Player loses point when they miss the ball
+* [x] AI player loses a point when they miss the ball
+* [x] Game restarts with each point after pressing space
 * [ ] Game ends at 10 points
 * [ ] Can restart game with spacebar
 * [ ] Can fire rockets at the other paddle (freezes paddle for 2 second)

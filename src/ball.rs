@@ -35,15 +35,7 @@ impl Ball {
 		self.location.y = self.location.y + (self.velocity.y * delta_time);
 	}
 
-	fn bounce_ball(&mut self, (arena_width, arena_height): (f32, f32)) {
-		if self.location.x + self.radius > arena_width {
-			self.location.x = arena_width - self.radius;
-			self.reverse_x_velocity();
-		} else if self.location.x - self.radius < 0.0 {
-			self.location.x = self.radius;
-			self.reverse_x_velocity();
-		}
-
+	fn bounce_ball(&mut self, (_, arena_height): (f32, f32)) {
 		if self.location.y + self.radius > arena_height {
 			self.location.y = arena_height - self.radius;
 			self.reverse_y_velocity();
@@ -60,24 +52,10 @@ impl Ball {
 	fn reverse_y_velocity(&mut self) {
 		self.velocity.y = self.velocity.y * -1.0;
 	}
+
+	pub fn reset(&mut self, (arena_width, arena_height): (f32, f32)) {
+		self.location.x = arena_width / 2.0;
+		self.location.y = arena_height / 2.0;
+		self.velocity = Point2::new(350.0, 150.0)
+	}
 }
-
-
-// self.ball_location = Point2::new(
-//             self.ball_location.x + (self.ball_velocity.x * delta_time),
-//             self.ball_location.y + (self.ball_velocity.y * delta_time)
-//         );
-
-//         if self.ball_location.x > self.window_width - self.ball_radius {
-//             self.ball_location.x = self.window_width - self.ball_radius;
-//             self.ball_velocity.x = self.ball_velocity.x * -1.0;
-//         } else if self.ball_location.x < self.ball_radius {
-//             self.ball_location.x = self.ball_radius;
-//             self.ball_velocity.x = self.ball_velocity.x * -1.0;
-//         } else if self.ball_location.y < self.ball_radius {
-//             self.ball_location.y = self.ball_radius;
-//             self.ball_velocity.y = self.ball_velocity.y * -1.0;
-//         } else if self.ball_location.y > self.window_height - self.ball_radius {
-//             self.ball_location.y = self.window_height - self.ball_radius;
-//             self.ball_velocity.y = self.ball_velocity.y * -1.0;
-//         }
