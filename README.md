@@ -9,6 +9,7 @@
 
 * [x] Create basic game screen
 * [x] Create center line
+* [x] Put scores on the board
 * [x] Create a ball in the center of the screen
 * [x] Have the ball move
 * [x] Have ball bounce off the walls

@@ -4,7 +4,7 @@ mod ball;
 use ggez::nalgebra::Point2;
 use ggez::{graphics, Context, GameResult, timer};
 use ggez::event::EventHandler;
-use ggez::graphics::{Rect, Color, MeshBuilder, Mesh, DrawMode};
+use ggez::graphics::{Rect, Color, MeshBuilder, Mesh, DrawMode, Text, TextFragment, WHITE, Scale};
 use paddle::Paddle;
 use ball::Ball;
 
@@ -39,6 +39,12 @@ impl Pong {
             .rectangle(DrawMode::fill(), center_line, Color::from_rgba(255, 255, 255, 10))
             .build(context)
     }
+
+    fn create_score(&self, score: u8) -> TextFragment {
+        TextFragment::new(score.to_string())
+            .color(WHITE)
+            .scale(Scale::uniform(50.0))
+    }
 }
 
 impl EventHandler for Pong {
@@ -68,8 +74,12 @@ impl EventHandler for Pong {
         let player_paddle = self.player_paddle.draw(context)?;
         let ball = self.ball.draw(context)?;
         let ai_paddle = self.ai_paddle.draw(context)?;
+        let player_score = Text::new(self.create_score(self.player_score));
+        let ai_score = Text::new(self.create_score(self.ai_score));
 
         graphics::draw(context, &center_line, (Point2::new(0.0, 0.0),))?;
+        graphics::draw(context, &player_score, (Point2::new(self.arena_size.0 / 2.0 - 50.0, 10.0),))?;
+        graphics::draw(context, &ai_score, (Point2::new(self.arena_size.0 / 2.0 + 25.0, 10.0),))?;
         graphics::draw(context, &ball, (Point2::new(0.0, 0.0),))?;
         graphics::draw(context, &player_paddle, (Point2::new(0.0, 0.0),))?;
         graphics::draw(context, &ai_paddle, (Point2::new(0.0, 0.0),))?;
