@@ -10,7 +10,8 @@ use ball::Ball;
 
 enum PlayingState {
     Playing,
-    Scored
+    Scored,
+    GameOver
 }
 
 pub struct Pong {
@@ -20,7 +21,8 @@ pub struct Pong {
     ai_paddle: Paddle,
     player_score: u8,
     ai_score: u8,
-    state: PlayingState
+    state: PlayingState,
+    max_score: u8
 }
 
 impl Pong {
@@ -34,7 +36,8 @@ impl Pong {
             ai_paddle: Paddle::new(arena_size, false),
             player_score: 0,
             ai_score: 0,
-            state: PlayingState::Playing
+            state: PlayingState::Playing,
+            max_score: 10
         }
     }
 
@@ -51,6 +54,15 @@ impl Pong {
         TextFragment::new(score.to_string())
             .color(WHITE)
             .scale(Scale::uniform(50.0))
+    }
+
+    fn scored(&mut self) {
+        if self.player_score >= self.max_score ||self.ai_score >= self.max_score {
+            self.state = PlayingState::GameOver;
+        } else {
+            self.state = PlayingState::Scored;
+            self.ball.reset(self.arena_size);
+        }
     }
 }
 
@@ -69,16 +81,22 @@ impl EventHandler for Pong {
 
                 if self.ball.location.x < 0.0 {
                     self.ai_score = self.ai_score + 1;
-                    self.state = PlayingState::Scored;
-                    self.ball.reset(self.arena_size);
+                    self.scored();
                 } else if self.ball.location.x > arena_width {
                     self.player_score = self.player_score + 1;
-                    self.state = PlayingState::Scored;
-                    self.ball.reset(self.arena_size);
+                    self.scored();
                 }
             },
             PlayingState::Scored => {
                 if pressed_keys.contains(&ggez::event::KeyCode::Space) {
+                    self.state = PlayingState::Playing;
+                }
+            },
+            PlayingState::GameOver => {
+                if pressed_keys.contains(&ggez::event::KeyCode::Space) {
+                    self.ball.reset(self.arena_size);
+                    self.ai_score = 0;
+                    self.player_score = 0;
                     self.state = PlayingState::Playing;
                 }
             }
@@ -110,6 +128,19 @@ impl EventHandler for Pong {
         match self.state {
             PlayingState::Scored => {
                 let start_again_text = TextFragment::new("Press space to play")
+                    .color(WHITE)
+                    .scale(Scale::uniform(50.0));
+                let start_again_text = Text::new(start_again_text);
+                let (text_width, _text_height) = start_again_text.dimensions(context);
+
+                graphics::draw(context, &start_again_text, (Point2::new(self.arena_size.0 / 2.0 - (text_width / 2) as f32, 100.0),))?;
+            },
+            PlayingState::GameOver => {
+                let text = match self.player_score >= self.max_score {
+                    true => "You Win! Press space to play again",
+                    false => "You lose! Press space to try again"
+                };
+                let start_again_text = TextFragment::new(text)
                     .color(WHITE)
                     .scale(Scale::uniform(50.0));
                 let start_again_text = Text::new(start_again_text);

@@ -24,8 +24,8 @@
 * [x] Player loses point when they miss the ball
 * [x] AI player loses a point when they miss the ball
 * [x] Game restarts with each point after pressing space
-* [ ] Game ends at 10 points
-* [ ] Can restart game with spacebar
+* [x] Game ends at 10 points
+* [x] Can restart game with spacebar
 * [ ] Can fire rockets at the other paddle (freezes paddle for 2 second)
 
 ## Skills needed
