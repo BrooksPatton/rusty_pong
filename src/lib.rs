@@ -31,7 +31,7 @@ impl EventHandler for Pong {
         let delta_time = duration.as_nanos() as f32 / 1e9;
 
         self.ball.update(delta_time, self.arena_size);
-        self.player_paddle.update(context, delta_time, self.arena_size, &self.ball);
+        self.player_paddle.update(context, delta_time, self.arena_size, &mut self.ball);
 
         Ok(())
     }

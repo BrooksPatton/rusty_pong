@@ -45,7 +45,7 @@ impl Paddle {
 			.build(context)
 	}
 
-	pub fn update(&mut self, context: &mut Context, delta_time: f32, arena_size: (f32, f32), ball: &Ball) {
+	pub fn update(&mut self, context: &mut Context, delta_time: f32, arena_size: (f32, f32), ball: &mut Ball) {
 		match self.move_direction(context, ball) {
 			Direction::Up => self.move_paddle_up(delta_time),
 			Direction::Down => self.move_paddle_down(delta_time),
@@ -53,6 +53,11 @@ impl Paddle {
 		};
 
 		self.limit_paddle_to_arena(arena_size);
+
+		match self.ball_moving_towards_paddle(ball) && self.colliding_with_ball(ball) {
+			true => ball.reverse_x_velocity(),
+			false => ()
+		};
 	}
 
 	fn move_direction(&mut self, context: &mut Context, ball: &Ball) -> Direction {
@@ -97,6 +102,25 @@ impl Paddle {
 			Direction::Down
 		} else {
 			Direction::Still
+		}
+	}
+
+	fn ball_moving_towards_paddle(&self, ball: &Ball) -> bool {
+		if (self.is_player && ball.velocity.x < 0.0) || (!self.is_player && ball.velocity.x > 0.0) {
+			true
+		} else {
+			false
+		}
+	}
+
+	fn colliding_with_ball(&self, ball: &Ball) -> bool {
+		if ball.location.y > self.location.y && ball.location.y < self.location.y + self.height {
+			match self.is_player {
+				true => ball.location.x - ball.radius < self.location.x + self.width && ball.location.x + ball.radius > self.location.x,
+				false => ball.location.x + ball.radius > self.location.x && ball.location.x - ball.radius < self.location.x + self.width
+			}
+		} else {
+			false
 		}
 	}
 }

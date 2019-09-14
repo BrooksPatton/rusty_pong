@@ -4,9 +4,9 @@ use ggez::{Context, GameResult};
 
 pub struct Ball {
 	pub location: Point2<f32>,
-    radius: f32,
+    pub radius: f32,
     color: Color,
-    velocity: Point2<f32>
+    pub velocity: Point2<f32>
 }
 
 impl Ball {
@@ -53,7 +53,7 @@ impl Ball {
 		}
 	}
 
-	fn reverse_x_velocity(&mut self) {
+	pub fn reverse_x_velocity(&mut self) {
 		self.velocity.x = self.velocity.x * -1.0;
 	}
 
