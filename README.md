@@ -10,7 +10,20 @@
 * [x] Create basic game screen
 * [x] Create a ball in the center of the screen
 * [x] Have the ball move
-* [ ] Have ball bounce off the walls
+* [x] Have ball bounce off the walls
+* [x] Create player paddle
+* [x] Player can move their paddle with arrow keys
+* [x] Player cannot move the paddle outside of the screen
+* [ ] AI player paddle exists
+* [ ] AI player paddle moves to hit the ball
+* [ ] AI player paddle cannot move outside the screen
+* [ ] Player loses point when they miss the ball
+* [ ] AI player loses a point when they miss the ball
+* [ ] Score is displayed
+* [ ] Game restarts with each point after pressing space
+* [ ] Game ends at 10 points
+* [ ] Can restart game with spacebar
+* [ ] Can fire rockets at the other paddle (freezes paddle for 2 second)
 
 ## Skills needed
 
@@ -32,7 +45,9 @@
 * Functions
 * Implemented functions for structures
 * Implicit return
+* Implicit : same name for instances
 * Installing Rust
+* lib.rs
 * Main function in main file
 * Match
 * math order of operations
@@ -52,4 +67,5 @@
 * Traits
 * Tuples
 * turbofish syntax
+* Types: f32, bool
 * Variables
