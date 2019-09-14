@@ -10,7 +10,8 @@ use ball::Ball;
 pub struct Pong {
     player_paddle: Paddle,
     ball: Ball,
-    arena_size: (f32, f32)
+    arena_size: (f32, f32),
+    ai_paddle: Paddle
 }
 
 impl Pong {
@@ -20,7 +21,8 @@ impl Pong {
         Pong {
             ball: Ball::new(arena_size),
             player_paddle: Paddle::new(arena_size, true),
-            arena_size
+            arena_size,
+            ai_paddle: Paddle::new(arena_size, false)
         }
     }
 }
@@ -41,9 +43,11 @@ impl EventHandler for Pong {
 
         let player_paddle = self.player_paddle.draw(context)?;
         let ball = self.ball.draw(context)?;
+        let ai_paddle = self.ai_paddle.draw(context)?;
 
         graphics::draw(context, &ball, (Point2::new(0.0, 0.0),))?;
         graphics::draw(context, &player_paddle, (Point2::new(0.0, 0.0),))?;
+        graphics::draw(context, &ai_paddle, (Point2::new(0.0, 0.0),))?;
 
         graphics::present(context)
     }

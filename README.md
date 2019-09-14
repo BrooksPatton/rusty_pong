@@ -15,7 +15,7 @@
 * [x] Player can move their paddle with arrow keys
 * [x] Player cannot move the paddle outside of the screen
 * [x] Ball bounces off player paddle
-* [ ] AI player paddle exists
+* [x] AI player paddle exists
 * [ ] Ball bounces off AI paddle
 * [ ] AI player paddle moves to hit the ball
 * [ ] AI player paddle cannot move outside the screen
