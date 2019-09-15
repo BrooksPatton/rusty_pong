@@ -47,6 +47,7 @@
 * enums
 * expect()
 * Functions
+* if let
 * Implemented functions for structures
 * Implicit return
 * Implicit : same name for instances
@@ -58,6 +59,7 @@
 * math order of operations
 * Math with different types
 * Mutable vs immutable variables
+* Prelude
 * printing to the console
 * Public vs private methods
 * really large numbers like 1e9
