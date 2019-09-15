@@ -29,7 +29,7 @@ impl Paddle {
 
 		Paddle {
 			location,
-			speed: 250.0,
+			speed: 400.0,
 			width,
 			height,
 			color: Color::from_rgb(255, 255, 255),
@@ -55,7 +55,7 @@ impl Paddle {
 		self.limit_paddle_to_arena(arena_size);
 
 		match self.ball_moving_towards_paddle(ball) && self.colliding_with_ball(ball) {
-			true => ball.reverse_x_velocity(),
+			true => ball.collide_with_paddle(),
 			false => ()
 		};
 	}

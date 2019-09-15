@@ -1,4 +1,4 @@
-use ggez::nalgebra::{Point2};
+use ggez::nalgebra::{Point2, Vector2};
 use ggez::graphics::{Color, WHITE, MeshBuilder, Mesh, DrawMode};
 use ggez::{Context, GameResult};
 
@@ -6,16 +6,25 @@ pub struct Ball {
 	pub location: Point2<f32>,
     pub radius: f32,
     color: Color,
-    pub velocity: Point2<f32>
+    pub velocity: Vector2<f32>,
+	speed: f32,
+	start_speed: f32
 }
 
 impl Ball {
 	pub fn new((arena_width, arena_height): (f32, f32)) -> Ball {
+		let velocity = Vector2::new(250.0, 100.0);
+		let velocity = velocity.normalize();
+		let start_speed = 200.0;
+		let velocity = velocity * start_speed;
+
 		Ball {
 			location: Point2::new(arena_width / 2.0, arena_height / 2.0),
 			radius: 5.0,
 			color: WHITE,
-			velocity: Point2::new(350.0, 150.0)
+			velocity,
+			speed: start_speed,
+			start_speed
 		}
 	}
 
@@ -45,7 +54,7 @@ impl Ball {
 		}
 	}
 
-	pub fn reverse_x_velocity(&mut self) {
+	fn reverse_x_velocity(&mut self) {
 		self.velocity.x = self.velocity.x * -1.0;
 	}
 
@@ -56,6 +65,17 @@ impl Ball {
 	pub fn reset(&mut self, (arena_width, arena_height): (f32, f32)) {
 		self.location.x = arena_width / 2.0;
 		self.location.y = arena_height / 2.0;
-		self.velocity = Point2::new(350.0, 150.0)
+		self.velocity = Vector2::new(350.0, 150.0).normalize() * self.start_speed;
+		self.speed = self.start_speed;
+	}
+
+	pub fn collide_with_paddle(&mut self) {
+		self.reverse_x_velocity();
+		self.increase_speed();
+	}
+
+	fn increase_speed(&mut self) {
+		self.speed = self.speed + 50.0;
+		self.velocity = self.velocity.normalize() * self.speed;
 	}
 }

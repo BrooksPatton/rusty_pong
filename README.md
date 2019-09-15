@@ -26,7 +26,9 @@
 * [x] Game restarts with each point after pressing space
 * [x] Game ends at 10 points
 * [x] Can restart game with spacebar
-* [ ] Can fire rockets at the other paddle (freezes paddle for 2 second)
+* [x] Can fire rockets at the other paddle (hit paddles shrink, other paddle grows)
+* [x] Ball increases speed with every hit
+* [ ] Ball changes angle based on where it hits the paddle
 
 ## Skills needed
 
