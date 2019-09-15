@@ -4,10 +4,10 @@ use ggez::{GameResult, Context, input, event};
 use crate::Ball;
 
 pub struct Paddle {
-	location: Point2<f32>,
+	pub location: Point2<f32>,
 	speed: f32,
-	width: f32,
-	height: f32,
+	pub width: f32,
+	pub height: f32,
 	color: Color,
 	is_player: bool
 }
@@ -122,5 +122,13 @@ impl Paddle {
 		} else {
 			false
 		}
+	}
+
+	pub fn grow(&mut self) {
+		self.height = self.height + 5.0;
+	}
+
+	pub fn shrink(&mut self) {
+		self.height = self.height - 5.0;
 	}
 }
