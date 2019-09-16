@@ -28,7 +28,7 @@
 * [x] Can restart game with spacebar
 * [x] Can fire rockets at the other paddle (hit paddles shrink, other paddle grows)
 * [x] Ball increases speed with every hit
-* [ ] Ball changes angle based on where it hits the paddle
+* [x] Ball changes angle based on where it hits the paddle
 
 ## Skills needed
 

@@ -1,4 +1,4 @@
-use ggez::nalgebra::Point2;
+use ggez::nalgebra::{Point2, Vector2};
 use ggez::graphics::{Mesh, MeshBuilder, DrawMode, Rect, Color};
 use ggez::{GameResult, Context, input, event};
 use crate::Ball;
@@ -55,7 +55,11 @@ impl Paddle {
 		self.limit_paddle_to_arena(arena_size);
 
 		match self.ball_moving_towards_paddle(ball) && self.colliding_with_ball(ball) {
-			true => ball.collide_with_paddle(),
+			true => {
+					let how_far_off_center = (ball.location.y - self.location.y) - self.height / 2.0;
+
+					ball.collide_with_paddle(how_far_off_center);
+				},
 			false => ()
 		};
 	}
@@ -96,9 +100,9 @@ impl Paddle {
 	}
 
 	fn get_ai_direction(&self, ball: &Ball) -> Direction {
-		if ball.location.y < self.location.y {
+		if ball.location.y < self.location.y + self.height / 2.0 {
 			Direction::Up
-		} else if ball.location.y > self.location.y + self.height {
+		} else if ball.location.y > self.location.y + self.height / 2.0 {
 			Direction::Down
 		} else {
 			Direction::Still

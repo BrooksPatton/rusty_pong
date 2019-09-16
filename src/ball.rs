@@ -3,7 +3,7 @@ use ggez::graphics::{Color, WHITE, MeshBuilder, Mesh, DrawMode};
 use ggez::{Context, GameResult};
 
 pub struct Ball {
-	pub location: Point2<f32>,
+	pub location: Vector2<f32>,
     pub radius: f32,
     color: Color,
     pub velocity: Vector2<f32>,
@@ -19,7 +19,7 @@ impl Ball {
 		let velocity = velocity * start_speed;
 
 		Ball {
-			location: Point2::new(arena_width / 2.0, arena_height / 2.0),
+			location: Vector2::new(arena_width / 2.0, arena_height / 2.0),
 			radius: 5.0,
 			color: WHITE,
 			velocity,
@@ -35,7 +35,7 @@ impl Ball {
 
 	pub fn draw(&mut self, context: &mut Context) -> GameResult<Mesh> {
 		MeshBuilder::new()
-			.circle(DrawMode::fill(), self.location, self.radius, 0.01, self.color)
+			.circle(DrawMode::fill(), Point2::from(self.location), self.radius, 0.01, self.color)
 			.build(context)
 	}
 
@@ -69,8 +69,15 @@ impl Ball {
 		self.speed = self.start_speed;
 	}
 
-	pub fn collide_with_paddle(&mut self) {
+	pub fn collide_with_paddle(&mut self, how_far_off_center: f32) {
 		self.reverse_x_velocity();
+		self.velocity.y = how_far_off_center / 25.0;
+		self.velocity.x = if self.velocity.x > 0.0 {
+			1.0
+		} else {
+			-1.0
+		};
+
 		self.increase_speed();
 	}
 
