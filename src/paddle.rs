@@ -1,4 +1,4 @@
-use ggez::nalgebra::{Point2, Vector2};
+use ggez::nalgebra::{Point2};
 use ggez::graphics::{Mesh, MeshBuilder, DrawMode, Rect, Color};
 use ggez::{GameResult, Context, input, event};
 use crate::Ball;
